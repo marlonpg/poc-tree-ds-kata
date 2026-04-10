@@ -1,6 +1,16 @@
 package kdtree
 
 case class Point2D(x: Double, y: Double) {
+  // d² = (x₁ - x₂)² + (y₁ - y₂)²
+  //  y
+  //6 │          ● B(4,6)
+  //  │          │
+  //  │          │ dy = 4
+  //  │          │
+  //2 │ ● A(1,2)┘
+  //  │   dx = 3
+  //  └──────────────── x
+  //    1    2    3    4
   def distanceSquaredTo(other: Point2D): Double = {
     val dx = x - other.x
     val dy = y - other.y
@@ -17,6 +27,7 @@ enum Axis {
   }
 }
 
+// case class gives us: .copy(), value equality, pattern matching, no `new` needed
 case class Node(
     point: Point2D,
     axis: Axis,
@@ -24,6 +35,7 @@ case class Node(
     right: Option[Node] = None
 )
 
+// private constructor — forces creation via companion object (KdTree.empty, KdTree.buildBalanced)
 class KdTree private (private val root: Option[Node]) {
 
   def insert(point: Point2D): KdTree =
