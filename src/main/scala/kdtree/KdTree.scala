@@ -1,6 +1,6 @@
 package kdtree
 
-final case class Point2D(x: Double, y: Double) {
+case class Point2D(x: Double, y: Double) {
   def distanceSquaredTo(other: Point2D): Double = {
     val dx = x - other.x
     val dy = y - other.y
@@ -17,14 +17,14 @@ enum Axis {
   }
 }
 
-final case class Node(
+case class Node(
     point: Point2D,
     axis: Axis,
     left: Option[Node] = None,
     right: Option[Node] = None
 )
 
-final class KdTree private (private val root: Option[Node]) {
+class KdTree private (private val root: Option[Node]) {
 
   def insert(point: Point2D): KdTree =
     KdTree(insertNode(root, point, Axis.X))
